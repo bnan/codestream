@@ -1,8 +1,8 @@
 # stream
 
-Stream the contents of a file to a server (which web clients are connected to) via WebSockets whenever it is touched, effectively creating a live stream coding experience.
+Stream a file to a server which relays it to connected clients via WebSockets.
 
-## Server
+## Relay Server
 
 Start the server that relays the streamer to the connected clients:
 
