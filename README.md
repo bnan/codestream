@@ -19,13 +19,3 @@ cd streamer/
 npm install
 node stream.js -f stream.js -u ws://localhost:1337
 ```
-
-## Viewer
-
-Run the client:
-
-```
-cd viewer/
-npm install
-http-server
-```

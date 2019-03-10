@@ -3,21 +3,42 @@
   <head>
     <meta charset="utf-8">
     <title>Stream</title>
-
-    <script>
-      const ws = new WebSocket("ws://127.0.0.1:1337")
-      ws.onmessage = (event) => {
-        document.querySelector('pre code').innerHTML = event.data
-        document.querySelectorAll('pre code').forEach(block => hljs.highlightBlock(block))
-      }
-    </script>
+    <style>
+    body {
+      margin: 0 auto;
+      width: 70vw;
+    }
+    </style>
   </head>
   <body>
-    <h1>Streaming from 127.0.0.1:1337</h1>
-    <pre><code>Loading...</code></pre>
+    <header>
+      <h1>Invalid stream. Please obtain a valid stream URL from a streamer.</h1>
+    </header>
+    <main>
+      <pre><code></code></pre>
+    </main>
 
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.15.6/styles/default.min.css">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.15.6/highlight.min.js"></script>
     <script>hljs.initHighlightingOnLoad();</script>
+
+    <script>
+    const streamer = window.location.hash.substr(1)
+    if (streamer) {
+      document.querySelector('h1').innerHTML = 'Streaming ' + streamer
+
+      const ws = new WebSocket("ws://127.0.0.1:1337")
+      ws.onopen = () => {
+        ws.send(JSON.stringify({'type': 'role', 'role': 'viewer', 'viewing': streamer}))
+      }
+      ws.onmessage = (event) => {
+        const packet = JSON.parse(event.data)
+        if (packet.type === 'file' && packet.streamer === streamer) {
+          document.querySelector('pre code').innerHTML = packet.file
+          document.querySelectorAll('pre code').forEach(block => hljs.highlightBlock(block))
+        }
+      }
+    }
+    </script>
   </body>
 </html>
