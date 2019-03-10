@@ -5,8 +5,22 @@
     <title>Stream</title>
     <style>
     body {
-      margin: 0 auto;
-      width: 70vw;
+      margin: 0;
+      padding: 0;
+      font-family: monospace;
+    }
+    pre { margin: 0 }
+    code {
+      padding: 1rem !important;
+      height: 100vh;
+    }
+    header {
+      padding: 1rem !important;
+      background: #ddd;
+      border-bottom: 1px 
+    }
+    h1 {
+      color: #444;
     }
     </style>
   </head>
@@ -14,8 +28,9 @@
     <header>
       <h1>Invalid stream. Please obtain a valid stream URL from a streamer.</h1>
     </header>
+
     <main>
-      <pre><code></code></pre>
+      <pre><code>Loading...</code></pre>
     </main>
 
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.15.6/styles/default.min.css">
@@ -25,7 +40,7 @@
     <script>
     const streamer = window.location.hash.substr(1)
     if (streamer) {
-      document.querySelector('h1').innerHTML = 'Streaming ' + streamer
+      document.querySelector('h1').innerHTML = 'Live streaming ' + streamer
 
       const ws = new WebSocket("ws://127.0.0.1:1337")
 

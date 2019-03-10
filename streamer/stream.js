@@ -26,17 +26,23 @@ parser.addArgument( [ '-u', '--url' ], { required: true, help: 'central server U
 const args = parser.parseArgs()
 
 const ws = new WebSocket(args.url)
-
 ws.on('error', () => error())
 
+// Identify as a streamer to get back a uuid and stream url
 ws.on('open', () => {
-  ws.send(JSON.stringify({'type': 'role', 'role': 'streamer'}))
+  fs.readFile(args.file, 'utf8', (err, contents) => {
+    ws.send(JSON.stringify({'type': 'role', 'role': 'streamer', 'file': contents}))
+  })
 })
 
 ws.on('message', data => {
   const json = JSON.parse(data)
+  // Save the uuid on the socket object
   ws.id = json.uuid
+  stream(ws, args.file)
+  // Print the stream URL for sharing
   utils.success(`Streaming on ${json.url}`)
 })
 
+// Stream the file whenever there are file changes
 chokidar.watch(args.file).on('change', (path) => stream(ws, path))
