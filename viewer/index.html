@@ -1,0 +1,23 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>Stream</title>
+
+    <script>
+      const ws = new WebSocket("ws://127.0.0.1:1337")
+      ws.onmessage = (event) => {
+        document.querySelector('pre code').innerHTML = event.data
+        document.querySelectorAll('pre code').forEach(block => hljs.highlightBlock(block))
+      }
+    </script>
+  </head>
+  <body>
+    <h1>Streaming from 127.0.0.1:1337</h1>
+    <pre><code>Loading...</code></pre>
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.15.6/styles/default.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.15.6/highlight.min.js"></script>
+    <script>hljs.initHighlightingOnLoad();</script>
+  </body>
+</html>
