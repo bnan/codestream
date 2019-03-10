@@ -28,12 +28,14 @@
       document.querySelector('h1').innerHTML = 'Streaming ' + streamer
 
       const ws = new WebSocket("ws://127.0.0.1:1337")
+
       ws.onopen = () => {
         ws.send(JSON.stringify({'type': 'role', 'role': 'viewer', 'viewing': streamer}))
       }
+
       ws.onmessage = (event) => {
         const packet = JSON.parse(event.data)
-        if (packet.type === 'file' && packet.streamer === streamer) {
+        if (packet.type === 'file') {
           document.querySelector('pre code').innerHTML = packet.file
           document.querySelectorAll('pre code').forEach(block => hljs.highlightBlock(block))
         }
