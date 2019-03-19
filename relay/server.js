@@ -12,7 +12,6 @@ wsServer.on('connection', (ws, request) => {
   ws.ip = request.connection.remoteAddress
   ws.id = uuidv4()
 
-  // Stream code from source to
   ws.on('message', (data) => {
     const json = JSON.parse(data)
 

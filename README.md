@@ -1,10 +1,10 @@
-# stream
+# codestream
 
 Stream a file to a server which relays it to connected clients via WebSockets.
 
-## Relay Server
+## Relay
 
-Start the server that relays the streamer to the connected clients:
+Start the server that relays the stream to the connected clients:
 
 ```
 cd server/
