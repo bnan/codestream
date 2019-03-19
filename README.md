@@ -7,7 +7,7 @@ Stream a file to a server which relays it to connected clients via WebSockets.
 Start the server that relays the stream to the connected clients:
 
 ```
-cd server/
+cd relay/
 npm install
 node server.js
 ```
